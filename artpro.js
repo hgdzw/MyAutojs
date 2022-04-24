@@ -22,7 +22,7 @@ function buyArt() {
         back();
         selectArt();
     } else {
-        http.post("https://sctapi.ftqq.com/SCT139509TdhPJm3uJSxH9WVVdC37jX3CP.send", {
+        http.post("https://sctapi.ftqq.com/SCT139714TAygkEw3ITsJ0mLxEWVQvqTmh.send", {
             title: "已经购买",
             desp: "请快去支付!"
         });

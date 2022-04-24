@@ -46,16 +46,11 @@
 ### 二、语法
    首先在vscode 中新建一个 js文件 在里面写代码 然后运行就行
 
-
-
-
    #### 2.1 应用类
    ```text
    //启动app
    app.launchPackage("com.eg.android.AlipayGphone");
-
 ```
-   
 
    #### 2.1 弹出消息类
    ```text
@@ -85,6 +80,7 @@
 
    //根据某个图标来找坐标
    
+
    // 根据bounds 点击
    bounds(48, 684, 1032, 872).click()
 ```
@@ -126,7 +122,73 @@
    
    #### 2.1 文件操作 files
    ```text
-   
 
 ```
+### 悬浮窗
+   创建一个悬浮窗，基本上都是创建一个原始的悬浮窗，然后在上面加东西,里面传递的是一个 layout
+   ```text
+   var w = floaty.rawWindow(
+      <frame gravity="center">
+         <text id="text">悬浮文字</text>
+      </frame>
+   );
+   //悬浮窗在脚本关闭时会自动关闭 所以设置一个空的setInterval 让一直显示
+   setInterval(()=>{}, 1000);
+   ```
+   #### layout 布局 详解  是ui 的一个
+   * frame:    alpha 这个是透明度  0 代表透明 1 全黑
+   ```text
+   
+   ```
 
+   #### 1.1 设置可触摸移动
+   ```text
+   //设置悬浮窗位置
+   w.setPosition(x, y)
+   //记录按键被按下时的触摸坐标
+   var x = 0,
+      y = 0;
+   //记录按键被按下时的悬浮窗位置
+   var windowX, windowY; G_Y = 0
+   //记录按键被按下的时间以便判断长按等动作
+   var downTime; yd = false;
+   win_1.logo.setOnTouchListener(function (view, event) {
+      if (logo_buys) { return }
+      log(event.getAction())
+      switch (event.getAction()) {
+         case event.ACTION_DOWN:
+               x = event.getRawX();
+               y = event.getRawY();
+               windowX = win_1.getX();
+               windowY = win_1.getY();
+               downTime = new Date().getTime();
+               return true;
+         case event.ACTION_MOVE:
+               if (logo_switch) { return true; }
+               if (!yd) {//如果移动的距离大于h值 则判断为移动 yd为真
+                  if (Math.abs(event.getRawY() - y) > 30 || Math.abs(event.getRawX() - x) > 30) { win_1.logo.attr("alpha", "1"); yd = true }
+               } else {//移动手指时调整两个悬浮窗位置
+                  win_1.setPosition(windowX + (event.getRawX() - x),//悬浮按钮定位
+                     windowY + (event.getRawY() - y));
+               }
+               return true;
+         case event.ACTION_UP:                //手指弹起
+               //触摸时间小于 200毫秒 并且移动距离小于30 则判断为 点击
+               if (Math.abs(event.getRawY() - y) < 30 && Math.abs(event.getRawX() - x) < 30) {
+                  toastLog("点击弹起")
+               }
+      }
+      return true;
+   });
+   ```
+
+   #### 1.2 点击图标功能页面
+   如果没有给绑定 setOnTouchListener 事件的话，那么想要点击出功能的话 基本上都是绑定
+   ```text
+   win_1.logo.on("click", () => {
+      toast("点击了");
+   })
+   ```
+
+### 打包软件
+   打包软件出去报毒，网上搜 说用mt改 autojs 关键字就行 但是也不大行，用 autox.js 也是不行 后面再找方法吧 

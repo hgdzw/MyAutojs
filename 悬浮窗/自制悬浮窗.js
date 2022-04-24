@@ -1,6 +1,3 @@
-// press(1363, 617, 5000);
-// gestures([0, 5000, [1363, 617]]
-// );
 importClass(java.lang.Runnable);
 importClass(android.animation.ObjectAnimator)
 importClass(android.animation.PropertyValuesHolder)
@@ -35,19 +32,6 @@ var logo_ms = 200//全局:  动画播放时间
 var DHK_ms = 200//全局:  对话框动画播放时间
 var tint_color = "#00000"//全局:  对话框图片颜色
 
-var logo_buys = false;//全局: 开启和关闭时占用状态 防止多次点击触发
-
-events.setKeyInterceptionEnabled("volume_up", true);
-events.setKeyInterceptionEnabled("volume_down", true);
-//启用按键监听
-events.observeKey();
-//监听音量上键按下
-events.onKeyDown("volume_up", function (event) {
-    gestures([0, 500, [1758 + 20, 743], [2000, 880]]
-    );
-    //现在的位置 1200 540   找到的位置 p.x p.y
-    // toast("音量上键被按下了");
-});
 
 /**
  * 需要三个悬浮窗一起协作达到Auto.js悬浮窗效果
@@ -78,7 +62,68 @@ time_0 = setInterval(() => {
 
 var win_sj, Pack = "", Acti = "", XC_SJ, logo_switch_1 = true
 function 设置() {
-    press(1363, 617, 5000);
+    XC_SJ = threads.start(function () {
+        logo_switch_1 = true
+        win_sj = floaty.rawWindow(
+            <frame w="{{device.width}}px" h="{{device.height}}px" >//模拟对话框_设置
+                <frame id="off" bg="#000000" alpha="0" /> // 这个是用来点击关闭的透明背景
+                <card margin="60 100 60 0" w="{{device.width-400}}px" h="{{device.height-1000}}px" cardCornerRadius="15dp" cardBackgroundColor="#ffffff"
+                    cardElevation="30dp" foreground="?selectableItemBackground">
+                    <vertical w="*" h="auto">
+                        <text margin="20 20 20 0" text="设置" textSize="24sp" textStyle="bold" textColor="#000000" />
+                        <scroll w="*" h="auto" marginBottom="10">
+                            <vertical w="*" h="auto">
+                                <frame w="*" >
+                                    <frame marginLeft="20" w="auto">
+                                        <img gravity="center|center_vertical" layout_gravity="center" w="26" h="26" src="@drawable/ic_accessible_black_48dp" />
+                                    </frame>
+                                    <button id="打开无障碍" text="打开无障碍服务" paddingLeft="60" gravity="left|center_vertical" layout_gravity="center" w="*" h="60" style="Widget.AppCompat.Button.Borderless" textColor="#000000" textSize="16sp" typeface="normal" />
+                                </frame>
+
+                                <frame w="*">
+                                    <frame marginLeft="20" w="auto">
+                                        <img gravity="center|center_vertical" layout_gravity="center" w="26" h="26" src="@drawable/ic_adb_black_48dp" tint="#000000" />
+                                    </frame>
+                                    <button id="当前包名" text="当前应用包名:{{Pack}}" paddingLeft="60" gravity="left|center_vertical" layout_gravity="center" w="*" h="auto" style="Widget.AppCompat.Button.Borderless" textColor="#000000" textSize="15sp" typeface="normal" ellipsize="marquee" />
+                                </frame>
+                            </vertical>
+                        </scroll>
+                    </vertical>
+                </card>
+            </frame>
+        )
+        time_3 = setInterval(() => {
+            // log("设置0")
+        }, 100)
+        win_sj.打开无障碍.on("click", () => {
+            win_sj_off(false)
+            app.startActivity({
+                action: "android.settings.ACCESSIBILITY_SETTINGS"
+            });
+            win_sj.close()
+        })
+        win_sj.off.on("click", () => {
+            win_sj.close()
+        })
+
+        function win_sj_off(E) {
+            // threads.start(function () {
+            //     sleep(DHK_ms)
+            //     win_sj.close()
+            //     clearInterval(time_1)
+            //     XC_SJ.interrupt()
+            //     if (E) {
+            //         win_1.close()
+            //         events.broadcast.emit("定时器关闭", time_0)
+            //         exit()
+            //     }
+            //     return
+            // })
+        }
+        time_1 = setInterval(() => {
+            // log("设置")
+        }, 1000)
+    })
 }
 
 
