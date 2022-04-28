@@ -42,7 +42,7 @@ var win_1 = floaty.rawWindow(
         <img id="logo_click" w="*" h="*" src="#ffffff" alpha="0" />
     </frame>
 )
-win_1.setPosition(-30, device.height / 2)//悬浮按钮定位
+win_1.setPosition(-30, device.height / 2)//悬浮按钮定位 
 
 var terid = setInterval(() => {
     log("13")
