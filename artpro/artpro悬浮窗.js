@@ -60,81 +60,35 @@ time_0 = setInterval(() => {
     //log("11")
 }, 1000)
 
-var win_sj, Pack = "", Acti = "", XC_SJ, logo_switch_1 = true
-function 设置() {
-    XC_SJ = threads.start(function () {
-        logo_switch_1 = true
-        win_sj = floaty.rawWindow(
-            <frame w="{{device.width}}px" h="{{device.height}}px" >//模拟对话框_设置
-                <frame id="off" bg="#000000" alpha="0" /> // 这个是用来点击关闭的透明背景
-                <card margin="60 100 60 0" w="{{device.width-400}}px" h="{{device.height-1000}}px" cardCornerRadius="15dp" cardBackgroundColor="#ffffff"
-                    cardElevation="30dp" foreground="?selectableItemBackground">
-                    <vertical w="*" h="auto">
-                        <text margin="20 20 20 0" text="设置" textSize="24sp" textStyle="bold" textColor="#000000" />
-                        <scroll w="*" h="auto" marginBottom="10">
-                            <vertical w="*" h="auto">
-                                <frame w="*" >
-                                    <frame marginLeft="20" w="auto">
-                                        <img gravity="center|center_vertical" layout_gravity="center" w="26" h="26" src="@drawable/ic_accessible_black_48dp" />
-                                    </frame>
-                                    <button id="打开无障碍" text="打开无障碍服务" paddingLeft="60" gravity="left|center_vertical" layout_gravity="center" w="*" h="60" style="Widget.AppCompat.Button.Borderless" textColor="#000000" textSize="16sp" typeface="normal" />
-                                </frame>
+function win_seach() {
+    var pathName = rawInput("请输入您创建的文件名!");
+    var total = rawInput("请输入爬取到第多少个!（请输入数字）");
+    let pathNameStr = "/sdcard/ArtPro脚本/" + pathName + ".txt";
 
-                                <frame w="*">
-                                    <frame marginLeft="20" w="auto">
-                                        <img gravity="center|center_vertical" layout_gravity="center" w="26" h="26" src="@drawable/ic_adb_black_48dp" tint="#000000" />
-                                    </frame>
-                                    <button id="当前包名" text="运行收集信息" paddingLeft="60" gravity="left|center_vertical" layout_gravity="center" w="*" h="auto" style="Widget.AppCompat.Button.Borderless" textColor="#000000" textSize="15sp" typeface="normal" ellipsize="marquee" />
-                                </frame>
-                            </vertical>
-                        </scroll>
-                    </vertical>
-                </card>
-            </frame>
-        )
-        time_3 = setInterval(() => {
-            // log("设置0")
-        }, 100)
-        win_sj.打开无障碍.on("click", () => {
-            win_sj_off(false)
-            app.startActivity({
-                action: "android.settings.ACCESSIBILITY_SETTINGS"
-            });
-            win_sj.close()
-        })
-        win_sj.当前包名.on("click", () => {
-            win_sj_off(false)
-            app.startActivity({
-                action: "android.settings.ACCESSIBILITY_SETTINGS"
-            });
-            win_sj.close()
-        })
-        win_sj.off.on("click", () => {
-            win_sj.close()
-        })
+    //把文件初始化了先
+    files.createWithDirs(pathNameStr);
+    files.write(pathNameStr, "");
+    for (let i = 1; i <= total; i++) {
+        //列表进去
+        id("et_search").findOne().click();
+        setText(i);
+        sleep(500);
+        click(983, 2267);
+        sleep(500);
+        click(311, 432);
+        sleep(500);
 
-        function win_sj_off(E) {
-            // threads.start(function () {
-            //     sleep(DHK_ms)
-            //     win_sj.close()
-            //     clearInterval(time_1)
-            //     XC_SJ.interrupt()
-            //     if (E) {
-            //         win_1.close()
-            //         events.broadcast.emit("定时器关闭", time_0)
-            //         exit()
-            //     }
-            //     return
-            // })
-        }
-
-        time_1 = setInterval(() => {
-            // log("设置")
-        }, 1000)
-    })
+        //查找记录
+        let res = id("name").findOne();
+        let tv_price = id("tv_price").findOne();
+        let tv_status = id("tv_status").findOne();
+        toast(res.text() + ":" + tv_status.text() + ":" + tv_price.text());
+        files.append(pathNameStr, i + ":" + res.text() + ":" + tv_status.text() + ":" + tv_price.text() + "\n")
+        sleep(500);
+        id("tv_nft_other").findOne().click();
+        sleep(500);
+    }
 }
-
-
 
 //记录按键被按下时的触摸坐标
 var x = 0,
@@ -166,7 +120,7 @@ win_1.logo.setOnTouchListener(function (view, event) {
         case event.ACTION_UP:                //手指弹起
             //触摸时间小于 200毫秒 并且移动距离小于30 则判断为 点击
             if (Math.abs(event.getRawY() - y) < 30 && Math.abs(event.getRawX() - x) < 30) {
-                设置();
+                win_seach();
                 toastLog("点击弹起")
             }
     }
