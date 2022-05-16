@@ -50,6 +50,7 @@
    ```text
    //启动app
    app.launchPackage("com.eg.android.AlipayGphone");
+   app.launchApp(appName);
 ```
 
    #### 2.1 弹出消息类
@@ -190,5 +191,28 @@
    })
    ```
 
+### 存储
+   #### Storages - 本地存储
+   let stro = storages.create(name)
+   stro.get(key);
+   stro.put(key, value);
+   stro.remove(key);
+
+   #### files 文件
+   //覆盖写
+   files.write("文件路径","内容");   
+   //追加写
+   files.append("文件路径",内容)
+
+
+### ui
+   ```text
+   "ui";
+   <text textSize="16sp" textColor="red" text="请输入您创建的文件名" />
+   <input id="pathName" hint="请输入您创建的文件名" />
+   
+   ```
+
 ### 打包软件
    打包软件出去报毒，网上搜 说用mt改 autojs 关键字就行 但是也不大行，用 autox.js 也是不行 后面再找方法吧 
+   用autopro 直接打包 
