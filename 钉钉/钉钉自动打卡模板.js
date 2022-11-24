@@ -19,17 +19,18 @@ function punchTheClock() {
   } else {
     unlock();
   }
+  toast("屏幕已解锁");
  
   //脚本执行时保持屏幕常亮  5分钟
   device.keepScreenOn(keepScreenOnMinutes * 60 * 1000);
  
   //随机休眠
   var sleep_time = random(0, randomSleepMinutes * 60 * 1000);
-  sleep(sleep_time);
+  // sleep(sleep_time);
   //打开钉钉
-  console.log("打开钉钉");
+  toast("打开钉钉");
   launchApp("钉钉");
-  sleep(3 * 1000);
+  sleep(4 * 1000);
  
   //判断是否已登录
   if (id("tv_welcome_name").exists()) {
@@ -191,12 +192,13 @@ function unlock() {
       sleep(500);
       swipe(400, 1800, 800, 230, 1000); //上滑轨迹 自己调整
       sleep(500);
-      var password = "1100"; //这里输入你手机的密码
-      for (var i = 0; i < password.length; i++) {
-          var p = text(password[i].toString()).findOne().bounds();
-          click(p.centerX(), p.centerY());
-          sleep(100);
-      }
+      // 手机设置没密码吧
+      // var password = "1100"; //这里输入你手机的密码
+      // for (var i = 0; i < password.length; i++) {
+      //     var p = text(password[i].toString()).findOne().bounds();
+      //     click(p.centerX(), p.centerY());
+      //     sleep(100);
+      // }
    }
 }
  

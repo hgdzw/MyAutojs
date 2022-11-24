@@ -39,6 +39,9 @@
 
    #### 获取控件
    我们可以通过上面的属性 再加上一个 findOne()  就可以获取一个控件
+   * findOne()  ： 找不到就阻塞  参数可以传等待时间 
+   * findOnce() ： 找不到返回空
+   * findOnce(i) ： 对屏幕上的控件进行搜索，并返回第 i + 1 个符合条件的控件；如果没有找到符合条件的控件，或者符合条件的控件个数 < i, 则返回null。
 
    #### 判断控件是否存在
    desc("我的").exists()
@@ -125,6 +128,37 @@
    ```text
 
 ```
+
+   #### 获取控件文本
+   ```
+   var res = id("chatting_time_tv").findOne();
+   toast(res.text());
+   ```
+
+
+### 时间
+  ```text
+   var date = new Date();
+   function getNowTime(){
+      var yy=date.getFullYear(); 
+      var MM=date.getMonth()+1;
+      //使用三目运算符，判断是一位还是两位，不足补0，最后返回拼接字符串日期时间用-分割，毫秒使用.分割
+      MM= MM <10 ? "0" + MM:MM;
+      var dd=date.getDate();
+      dd= dd<10? "0" + dd:dd;
+      var HH=date.getHours();
+      HH=HH <10? "0" + HH:HH;
+      var mm=date.getMinutes(); 
+      mm = mm< 10?  "0"+ mm:mm;  
+      var ss=date.getSeconds(); 
+      ss=ss<10 ? "0"+ss:ss;
+      var ms= date.getMilliseconds();
+      ms= ms< 100? "0"+ ms: ms;
+      ms = ms< 10? "0"+ ms: ms;
+      return yy + "" + MM + "" + dd + "-" + HH  + "" + mm + "" + ss + "." + ms;
+   }
+  ```
+
 ### 悬浮窗
    创建一个悬浮窗，基本上都是创建一个原始的悬浮窗，然后在上面加东西,里面传递的是一个 layout
    ```text
