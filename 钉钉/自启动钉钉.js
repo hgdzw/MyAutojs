@@ -45,12 +45,13 @@ function punchTheClock() {
     var res = id("chatting_time_tv").findOnce(1);
     var upTime = res.text()
     toast("上次打卡时间"+upTime);
-    if(getTime() == upTime){
+    console.log("上次打卡时间"+upTime);
+    if(getTime() == upTime || "刚刚" == upTime){
         toast("时间相等，打卡成功");
-        http.get("https://sctapi.ftqq.com/SCT154874Tst5q2yeCTjPJB20GtN7DBbP2.send?title=钉钉打卡成功&desp=long_content");
+        http.get("https://sctapi.ftqq.com/SCT154874Tst5q2yeCTjPJB20GtN7DBbP2.send?title=钉钉打卡成功_结果"+upTime+"&desp=long_content");
     }else{
         toast("时间不相等，打卡失败");
-        http.get("https://sctapi.ftqq.com/SCT154874Tst5q2yeCTjPJB20GtN7DBbP2.send?title=钉钉打卡失败&desp=long_content");
+        http.get("https://sctapi.ftqq.com/SCT154874Tst5q2yeCTjPJB20GtN7DBbP2.send?title=钉钉打卡失败_结果"+upTime+"&desp=long_content");
     }
   sleep(2 * 1000);
   back();
