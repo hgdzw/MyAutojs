@@ -27,3 +27,4 @@ var res = http.postMultipart(url, {api_key: "ogFOdwr6PXS4EAZKGm5qe6Ar9bZf3y7c",a
     image_file: open("/storage/emulated/0/1/6.jpg")
 });
 toast(res.body.string());
+console.log(res.body.string());
