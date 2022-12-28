@@ -20,5 +20,12 @@
 // }else{
 //     toast("不相等")
 // }
-home()
+var res = id("chatting_time_tv").findOnce(1);
+var upTime = res.text()
+
+// if (text("08:34").findOnce()) {
+//     toastLog("找到了")
+
+// }
+toast("上次打卡时间"+upTime);
 
