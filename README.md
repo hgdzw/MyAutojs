@@ -158,6 +158,41 @@
       return yy + "" + MM + "" + dd + "-" + HH  + "" + mm + "" + ss + "." + ms;
    }
   ```
+### 输入文本
+   配合剪切板实现输入：
+
+   * setClip(text);
+   * getClip()返回系统剪贴板内容
+   * UiObject.paste()对输入框控件进行粘贴操作
+
+   根据传入的参数来输入文本：
+
+   * setText([i, ]text)将第i 个输入框的文本设置为text；不加参数i，则把所有输入框的文本都置为text
+   * input([i, ]text)在将第i 个输入框原来的文本上追加文本text，不加参数i则会把所有输入框的文本追加内容text
+
+   上面介绍的是全局函数，下面是一些基于控件的操作：
+
+   * UiObject.setText(text)设置输入框控件的文本内容，只对可编辑的输入框(editable为true)有效
+   * UiObject.setSelection(start, end)对输入框控件设置选中的文字内容
+   * UiObject.copy()对输入框文本的选中内容进行复制，只能用于输入框控件，并且当前输入框控件有选中的文本（可以通过setSelection()函数来设置输入框选中的内容）
+   * UiObject.cut()对输入框文本的选中内容进行剪切，后面同上
+   * UiObject.paste()对输入框控件进行粘贴，粘贴剪贴板的内容
+
+   可以先写到粘贴板，长按 longClick 粘贴
+
+### 模块化
+   分为自己写的js 和 安卓自带的
+   自己写的
+   ```js
+   var circle = require('circle.js');
+   console.log("半径为 4 的圆的面积是 %d", circle.area(4));
+   ```
+
+   安卓自带
+   ```js
+   importClass(android.view.animation.AnticipateInterpolator)
+
+   ```
 
 ### 悬浮窗
    创建一个悬浮窗，基本上都是创建一个原始的悬浮窗，然后在上面加东西,里面传递的是一个 layout

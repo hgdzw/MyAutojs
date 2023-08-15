@@ -11,8 +11,12 @@ if(hui){
   tang = "SCT184398T8bdHwtRm6W2OWyeuk7LmDC5k";
   pPlus = "f049e5d1a9ce4db2ab4ddde7e4347630";
 }else{
-  tang = "SCT154874Tst5q2yeCTjPJB20GtN7DBbP2";
-  pPlus = "95cc17ff0767482f8c13bd641391de30";
+  // tang = "SCT154874Tst5q2yeCTjPJB20GtN7DBbP2";
+  pPlus = "2f81cce471ce4ace9d732b686d5d77e8";
+  //ping
+  // pPlus = "acebbffed8704d0c8300091596f5d0bf";
+
+  // pPlus = "95cc17ff0767482f8c13bd641391de30";
 }
 
 //进入打卡流程
@@ -52,16 +56,16 @@ function punchTheClock() {
   // http.get("http://www.pushplus.plus/send?token=f049e5d1a9ce4db2ab4ddde7e4347630&title="+title+"&content="+context+"&template=txt");
   
   // 判断是不是打过卡了
-  var res = className("android.view.ViewGroup").findOne();
+  var res = id("session_item").findOne();
   click(res.bounds().centerX(), res.bounds().centerY())
   sleep(2 * 1000);
   try{
-    findTimePushOne();
-    // findTimePushTwo();
+    // findTimePushOne();
+    findTimePushTwo();
   }catch(e){
     console.log("发送消息异常！",e);
     var message = "大概是text又找不到了，不过基本上进了这里自动打卡应该成功了~";
-    http.get("https://sctapi.ftqq.com/"+tang+".send?title=打卡出现异常&desp="+message);
+    // http.get("https://sctapi.ftqq.com/"+tang+".send?title=打卡出现异常&desp="+message);
     http.get("http://www.pushplus.plus/send?token="+pPlus+"&title=打卡出现异常&content="+message+"&template=txt");
   }
   sleep(2 * 1000);
@@ -98,7 +102,7 @@ function clickMessage(message) {
 //第一种方式 找时间 和当前时间比较
 function findTimePushOne(){
 
-  var res = id("chatting_time_tv2").findOnce(1);
+  var res = id("chatting_time_tv").findOnce(1);
   var upTime = res.text()
   toast("上次打卡时间"+upTime);
   console.log("上次打卡时间"+upTime);
@@ -117,7 +121,7 @@ function findTimePushOne(){
   var title = "钉钉打卡"+ result +"_结果"+upTime;
   var context = '当前时间' + nowTime + ',钉钉获取第一个时间为' + upTime
   //推送到两个地方
-  http.get("https://sctapi.ftqq.com/"+tang+".send?title="+title+"&desp="+context);
+  // http.get("https://sctapi.ftqq.com/"+tang+".send?title="+title+"&desp="+context);
   http.get("http://www.pushplus.plus/send?token="+pPlus+"&title="+title+"&content="+context+"&template=txt");
 }
 
@@ -137,7 +141,7 @@ function findTimePushTwo(){
   var title = "钉钉打卡"+ result;
   var context = '当前时间' + nowTime
   //推送到两个地方
-  http.get("https://sctapi.ftqq.com/"+tang+".send?title="+title+"&desp="+context);
+  // http.get("https://sctapi.ftqq.com/"+tang+".send?title="+title+"&desp="+context);
   http.get("http://www.pushplus.plus/send?token="+pPlus+"&title="+title+"&content="+context+"&template=txt");
 }
 
@@ -158,7 +162,7 @@ function unlock() {
   device.wakeUp();
   if(isDeviceLocked()){
       sleep(500);
-    //   swipe(400, 1800, 400, 700, 200); //上滑轨迹 自己调整
+      swipe(400, 1800, 400, 700, 200); //上滑轨迹 自己调整
       gesture(1000, [400, 1800], [400, 700])
       sleep(500);
           // 手机设置没密码吧
